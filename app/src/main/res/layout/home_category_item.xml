@@ -6,11 +6,12 @@
 
     <TextView
         android:id="@+id/category_title"
-        android:layout_width="110dp"
-        android:layout_height="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Islam"
         android:textColor="#fff"
-        android:textSize="14dp"
+        android:lines="3"
+        android:textSize="14sp"
         android:fontFamily="@font/monestro_bold"
         android:gravity="center_vertical|center_horizontal"
         android:background="@drawable/black_rect_bg"/>

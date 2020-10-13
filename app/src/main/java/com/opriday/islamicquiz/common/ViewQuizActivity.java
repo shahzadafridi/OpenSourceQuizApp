@@ -32,6 +32,7 @@ import com.opriday.islamicquiz.model.Quiz;
 import com.opriday.islamicquiz.user.HomeActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +64,12 @@ public class ViewQuizActivity extends AppCompatActivity {
         title = (TextView) findViewById(R.id.viewQuiz_title);
         count = (TextView) findViewById(R.id.viewQuiz_count);
         recyclerView = (RecyclerView) findViewById(R.id.viewQuiz_rv);
-        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false) {
+            @Override
+            public boolean canScrollHorizontally() {
+                return false;
+            }
+        };
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.canScrollHorizontally(0);
         adapter = new QuizAdapter(quizList, ViewQuizActivity.this);
@@ -79,6 +85,13 @@ public class ViewQuizActivity extends AppCompatActivity {
                 } else {
                     next.setVisibility(View.INVISIBLE);
                     finish.setVisibility(View.VISIBLE);
+                    linearLayoutManager = new LinearLayoutManager(ViewQuizActivity.this, LinearLayoutManager.HORIZONTAL, false) {
+                        @Override
+                        public boolean canScrollHorizontally() {
+                            return true;
+                        }
+                    };
+                    recyclerView.setLayoutManager(linearLayoutManager);
                 }
             }
         });
@@ -105,7 +118,9 @@ public class ViewQuizActivity extends AppCompatActivity {
     }
 
     private void showResultDialog() {
-        countDownTimer.cancel();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
         timer.setVisibility(View.GONE);
         final Dialog dialog = Constants.onCreateDialog(ViewQuizActivity.this, R.layout.quiz_result_layout, false);
         finish.setText("Exit");
@@ -179,9 +194,20 @@ public class ViewQuizActivity extends AppCompatActivity {
                             Quiz quiz = snap.getValue(Quiz.class);
                             quizList.add(quiz);
                         }
+                        Collections.shuffle(quizList);
+
                         totalQuiz = quizList.size();
+
+                        if (totalQuiz > 0){
+                            totalQuiz = 10;
+                            quizList = quizList.subList(0,10);
+                            adapter.setQuizList(quizList);
+                        }else {
+                            adapter.setQuizList(quizList);
+                        }
+
                         initResultArrayWithZero(totalQuiz);
-                        adapter.setQuizList(quizList);
+
                         count.setText("1 / " + totalQuiz);
                         if (!Constants.getSharedPref(ViewQuizActivity.this).getString("email","").contains("admin")) {
                             showTimer();
@@ -222,13 +248,14 @@ public class ViewQuizActivity extends AppCompatActivity {
 
     private int getTotalCorrectAns() {
         int correct = 0;
-        for (int i = 0; i < result.length; i++) {
+        for (int i = 0; i < (result.length -1); i++) {
             Log.e("result", "Position: ["+i+"] , Result[" + i + "]: " + result[i] + " , Correct option: [" + quizList.get(i).getCorrect()+"]");
             if (String.valueOf(result[i]).contentEquals(quizList.get(i).getCorrect())) {
                 correct = correct + 1;
             }
         }
         return correct;
+
     }
 
 
