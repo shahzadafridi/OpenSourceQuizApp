@@ -194,6 +194,7 @@ public class ViewQuizActivity extends AppCompatActivity {
                             Quiz quiz = snap.getValue(Quiz.class);
                             quizList.add(quiz);
                         }
+
                         Collections.shuffle(quizList);
 
                         totalQuiz = quizList.size();
