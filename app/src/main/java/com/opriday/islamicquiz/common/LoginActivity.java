@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
 import com.opriday.islamicquiz.R;
 import com.opriday.islamicquiz.Util.Constants;
 import com.opriday.islamicquiz.admin.MainActivity;
@@ -42,6 +43,18 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
         InitUI();
+        Log.e(TAG,new Gson().toJson(getIntent()));
+        Intent i = getIntent();
+        String test = i.getStringExtra("test");
+        String story_id = i.getStringExtra("story_id");
+        Log.e("FCM-LoginAct",test + " , "+ story_id);
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.e("FCM-LoginAct",new Gson().toJson(intent));
     }
 
     public void InitUI(){

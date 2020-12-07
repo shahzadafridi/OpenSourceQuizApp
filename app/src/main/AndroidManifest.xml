@@ -12,17 +12,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".user.ViewUserProfileActivity"></activity>
+        <activity android:name=".user.ViewUserProfileActivity">
+
+        </activity>
         <activity android:name=".common.ViewCategoryActivity" />
         <activity android:name=".admin.AddCategoryActivity" />
         <activity android:name=".user.HomeActivity">
-
+            <intent-filter>
+                <action android:name="TOP_STORY_ACTIVITY" />
+            </intent-filter>
         </activity>
         <activity android:name=".user.RegistrationActivity" />
         <activity android:name=".common.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,6 +34,14 @@
         <activity android:name=".common.ViewQuizActivity" />
         <activity android:name=".admin.AddQuizActivity" />
         <activity android:name=".admin.MainActivity"></activity>
+
+        <!-- Firebase Notifications -->
+        <service android:name=".Util.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "470747130842-9tjruap2t6vb632reg1n0olec99e9l45.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.opriday.islamicquiz",
+            "certificate_hash": "6c02bbffa499f42971e049814829bd469c5909e5"
+          }
+        },
+        {
           "client_id": "470747130842-r67hkbcuav7utc88857kdrjb1bpl34rr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
